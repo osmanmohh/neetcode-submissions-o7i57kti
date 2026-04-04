@@ -1,0 +1,25 @@
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        rows, cols = len(board), len(board[0])
+        dirs = [[1,0],[-1,0],[0,1],[0,-1]]
+        def dfs(r, c):
+            if not (0 <= r < rows and 0 <= c < cols) or board[r][c] != "O":
+                return
+            board[r][c] = "S" # safe
+            for dr, dc in dirs:
+                dfs(r + dr, c + dc)
+        
+        for r in range(rows):
+            for c in range(cols):
+                if (r == 0 or r == rows-1 or c == 0 or c == cols-1) and board[r][c] == "O":
+                    dfs(r,c)
+        
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c] == "O":
+                    board[r][c] = "X"
+        for r in range(rows):
+            for c in range(cols):
+                if board[r][c] == "S":
+                    board[r][c] = "O"
+            
