@@ -1,0 +1,17 @@
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        words = set(wordDict)
+        memo = {len(s): True}
+        def f(i):
+            if i in memo:
+                return memo[i]
+            for j in range(i, len(s)):
+                if s[i:j+1] in words and f(j + 1):
+                    memo[i] = True
+                    return True
+            memo[i] = False
+            return False
+        
+        return f(0)
+
+
